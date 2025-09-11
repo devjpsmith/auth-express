@@ -1,0 +1,33 @@
+# Test Requests
+
+### Create a new client app
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "name": "My Test App",
+  "permissions": [ "read:users" , "write:users" ],
+  "grant_types": [ "client_credentials" ],
+  "token_lifetime_seconds": 600
+}
+
+> {%
+    client.global.set("clientId", response.body.client_id);
+    client.global.set("clientSecret", response.body.client_secret);
+%}
+
+### Request an access token
+POST http://localhost:3000/oauth/token
+Content-Type: application/json
+
+{
+  "client_id": "{{clientId}}",
+  "client_secret": "{{clientSecret}}",
+  "grant_type": "client_credentials"
+}
+
+### Test well-known route
+GET http://localhost:3000/.well-known/openid-configuration
+
+###
+GET http://localhost:3000/.well-known/jwk.json
