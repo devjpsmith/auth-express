@@ -1,6 +1,6 @@
-import path from 'node:path';
 import { Router } from 'express';
 import config from '../config/app';
+import { getFileInParentDirectory } from '../lib/utils';
 
 const router  = Router();
 
@@ -12,11 +12,7 @@ router.get('/openid-configuration', (req, res) => {
 })
 
 router.get('/jwk.json', async (req, res) => {
-    // the file is one directory up
-    const dirs = __dirname.split('/')
-    dirs.pop()
-    const dirname = dirs.join('/')
-    const filePath = path.join(dirname, 'jwk.json');
+    const filePath = getFileInParentDirectory(__dirname, 'jwk.json');
     res.sendFile(filePath, (err: Error) => {
         if (err) {
             console.error('Error sending jwk.json', err);
