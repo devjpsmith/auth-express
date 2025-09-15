@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import buildAuthService from '../factories/auth-service';
+import buildAppService from '../factories/app-service';
 import { NewAppParameters } from '../types/new-app-parameters';
 
 const router = Router();
-const authService = buildAuthService();
+const authService = buildAppService();
 
 router.post('/', async (req: { body: NewAppParameters}, res) => {
     const app = await authService.addApp(req.body);

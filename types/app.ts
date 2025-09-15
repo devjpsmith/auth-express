@@ -1,6 +1,6 @@
 import { GrantType } from './grant-type';
 
-export type AuthApp = {
+export type App = {
     name: string;
     client_id: string;
     client_secret: string | null;

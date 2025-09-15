@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import buildAuthService from '../factories/auth-service';
+import buildAuthService from '../factories/app-service';
 import tokenGenerator from '../services/token-generator';
 
 const router = Router();

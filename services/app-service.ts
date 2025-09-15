@@ -1,11 +1,11 @@
-import AuthAppRepository from '../interfaces/auth-app-repository';
-import { AuthApp } from '../types/auth-app';
+import AppRepository from '../interfaces/app-repository';
+import { App } from '../types/app';
 import ClientGenerator from '../interfaces/client-generator';
 import { NewAppParameters } from '../types/new-app-parameters';
 
-export default class AuthService {
+export default class AppService {
     constructor(
-        private readonly _authAppRepository: AuthAppRepository,
+        private readonly _appRepository: AppRepository,
         private readonly _clientGenerator: ClientGenerator
     ) { }
 
@@ -17,12 +17,12 @@ export default class AuthService {
         if (!token_lifetime_seconds) throw new Error('token lifetime is required');
     }
 
-    public async getApp(clientId: string, clientSecret: string): Promise<AuthApp | undefined> {
-        return await this._authAppRepository.get(x => x.client_id === clientId && x.client_secret === clientSecret);
+    public async getApp(clientId: string, clientSecret: string): Promise<App | undefined> {
+        return await this._appRepository.find(x => x.client_id === clientId && x.client_secret === clientSecret);
     }
 
     public async addApp(newAppParameters: NewAppParameters)
-        : Promise<AuthApp> {
+        : Promise<App> {
         this.validateNewApp(newAppParameters);
         const { clientId, clientSecret } = this._clientGenerator.getNewClient();
         const authApp = {
@@ -30,7 +30,7 @@ export default class AuthService {
             client_id: clientId,
             client_secret: clientSecret,
         };
-        await this._authAppRepository.save(authApp);
+        await this._appRepository.save(authApp);
         return authApp;
     }
 }
