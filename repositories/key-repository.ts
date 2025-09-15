@@ -1,4 +1,4 @@
-import RepositoryBase from '../repositories/repository-base';
+import RepositoryBase from './repository-base';
 import { Key } from '../types/key';
 
 export default class KeyRepository extends RepositoryBase<Key> {

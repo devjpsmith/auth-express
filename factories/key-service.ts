@@ -1,5 +1,5 @@
 import KeyService from '../services/key-service';
-import KeyRepository from '../interfaces/key-repository';
+import KeyRepository from '../repositories/key-repository';
 import { Config, JsonDB } from 'node-json-db';
 import config from '../config/app';
 

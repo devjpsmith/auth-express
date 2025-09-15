@@ -1,6 +1,6 @@
-import { generateKeyPairSync, createPublicKey } from 'crypto';
+import { generateKeyPairSync, createPublicKey, getRandomValues } from 'crypto';
 import { Key as tKey } from '../types/key';
-import { ulid } from 'ulid';
+import { base32crockford} from '@scure/base/index';
 
 type Key = Omit<tKey, 'id'>;
 
@@ -17,7 +17,9 @@ export default function generateKey(): Key {
         }
     });
 
-    const key_id = ulid();
+    const bitarray = new Uint8Array(48);
+    getRandomValues(bitarray);
+    const key_id = base32crockford.encode(bitarray).toLowerCase();
 
     const key = createPublicKey(publicKey);
     const publicKeyJwk = key.export({ format: 'jwk' });

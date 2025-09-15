@@ -1,10 +1,11 @@
-import fs from 'node:fs';
 import crypto from 'crypto';
 import config from '../config/auth';
-import { base64UrlEncode, getFileInParentDirectory, urlEncode } from '../lib/utils';
+import { base64UrlEncode, urlEncode } from '../lib/utils';
+import buildKeyService from '../factories/key-service';
 
+const keyService = buildKeyService();
 
-export default function (data: object, exp): string {
+export default async function (data: object, exp): Promise<string> {
     const header = {
         kid: config.keyid,
         alg: config.algorithm,
@@ -23,13 +24,12 @@ export default function (data: object, exp): string {
     const signingContent = `${encodedHeader}.${encodedPayload}`;
 
     // the file is one directory up
-    const fileName = getFileInParentDirectory(__dirname, 'private.key');
-    const privateKey = fs.readFileSync(fileName, 'utf8');
+    const key = await keyService.getCurrentKey();
 
     const signature = crypto
         .createSign('RSA-SHA256')
         .update(signingContent)
-        .sign(privateKey, 'base64');
+        .sign(key.private_key, 'base64');
     const encodedSig = urlEncode(signature);
 
     return `${encodedHeader}.${encodedPayload}.${encodedSig}`;

@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import config from '../config/app';
-import { getFileInParentDirectory } from '../lib/utils';
+import buildKeyService from '../factories/key-service';
 
 const router  = Router();
+const keyService = buildKeyService();
 
 router.get('/openid-configuration', (req, res) => {
     res.json({
@@ -12,13 +13,9 @@ router.get('/openid-configuration', (req, res) => {
 })
 
 router.get('/jwk.json', async (req, res) => {
-    const filePath = getFileInParentDirectory(__dirname, 'jwk.json');
-    res.sendFile(filePath, (err: Error) => {
-        if (err) {
-            console.error('Error sending jwk.json', err);
-            res.status(500).send();
-        }
-    })
+    const currentKeys = await keyService.getKeys();
+    const keys = currentKeys.map(k => JSON.parse(k.jwk_json));
+    res.json({keys});
 })
 
 export default router;

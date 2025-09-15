@@ -24,7 +24,7 @@ router.post('/token', async (req, res) => {
 
         // request is good; issue a token
         const { permissions, name: sub } = app;
-        const accessToken = tokenGenerator({
+        const accessToken = await tokenGenerator({
             permissions,
             sub
         }, app.token_lifetime_seconds);
