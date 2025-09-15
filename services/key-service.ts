@@ -1,17 +1,12 @@
 import KeyRepository from '../interfaces/key-repository';
-import { ulid } from 'ulid';
+import keyGenerator from './key-generator';
 
 export default class KeyService {
     constructor(private readonly _repository: KeyRepository) { }
 
     public async rotateKeys(): Promise<void> {
         // add a new key
-        await this._repository.save({
-            id: -1,
-            key_id: ulid(),
-            private_key: ulid(),
-            public_key: ulid()
-        })
+        await this._repository.save({ ...keyGenerator(), id: -1 });
 
         // delete earliest key
         const list = await this._repository.getAll();
