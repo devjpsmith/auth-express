@@ -1,6 +1,6 @@
-import AppRepository from '../interfaces/app-repository';
+import AppRepository from '../repositories/app-repository';
 import { App } from '../types/app';
-import ClientGenerator from '../interfaces/client-generator';
+import ClientGenerator from './client-generator';
 import { NewAppParameters } from '../types/new-app-parameters';
 
 export default class AppService {

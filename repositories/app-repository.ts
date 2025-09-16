@@ -1,8 +1,7 @@
 import { App } from '../types/app';
-import IAuthAppRepository from '../interfaces/app-repository'
 import RepositoryBase from './repository-base';
 
-export default class AppRepository extends RepositoryBase<App> implements IAuthAppRepository {
+export default class AppRepository extends RepositoryBase<App> {
     protected readonly _path = '/apps';
 
     public async list(): Promise<App[]> {

@@ -4,26 +4,26 @@ This project is a sample authentication server. It allows a user to register an 
 
 ### Getting started
 
-I'm using PNPM as my package manager.
+I'm using PNPM as my package manager. If you prefer to use your own package manager, like NPM, just substitute the related commands.
 
 In the root of the project run:
 ```shell
+# npm install
 pnpm i
 ```
-Once all packages are installed, set an environment variable for your Key Identifier. Any set of random letters and number will do.
-```shell
-# feel free to use this or change it. It's not sensitive data
-export KEY_ID=01K4X5P3KQ9S16Z6H3KQ6KCDN6
-```
 
-Before running the server, several files need to be generated. Run:
+#### Adding initial keys
+This next step will create the initial RSA keys and create an internal app (for admin tasks)
+
 ```shell
-pnpm generate-keys
+# npm run ts-node generate-keys
+pnpm ts-node generate-keys
 ```
-This will create a `private.key`, `public.key`, and `jwk.json` file. The private key is required to sign the JWT access token and the public key is used to verify the signature. The public key is only used here to generate the `jwk.json` contents, which are then provided through the `/.well-known/jwk.json` endpoint to applications wanting to verify the token.
+This will add a `private_key`, `public_key`, and `jwk_json` entry to the database. The private key is required to sign the JWT access token and the public key is used to verify the signature. The public key is only used here to generate the `jwk.json` contents, which are then provided through the `/.well-known/jwk.json` endpoint to applications wanting to verify the token.
 
 To begin the application server, run:
 ```shell
+# npm run dev-start
 pnpm dev-start
 ```
 You don't need to create your database first. When you make the first request, the `test-db.json` file will be created and the data saved.
