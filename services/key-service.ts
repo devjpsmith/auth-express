@@ -13,7 +13,6 @@ export default class KeyService {
         const list = await this._repository.getAll();
         if (list.length > 2) {
             const id = list[0].id;
-            console.log(`Deleting key with id ${id}`);
             await this._repository.delete(id);
         }
     }

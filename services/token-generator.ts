@@ -6,12 +6,15 @@ import buildKeyService from '../factories/key-service';
 const keyService = buildKeyService();
 
 export default async function (data: object, exp): Promise<string> {
+    // the file is one directory up
+    const key = await keyService.getCurrentKey();
+
     const header = {
-        kid: config.keyid,
+        kid: key.key_id,
         alg: config.algorithm,
         typ: 'JWT'
     };
-    const now = Math.floor(Date.now() / 1000)
+    const now = Math.floor(Date.now() / 1000);
     const payload = {
         ...data,
         iss: config.issuer,
@@ -22,9 +25,6 @@ export default async function (data: object, exp): Promise<string> {
     const encodedHeader = base64UrlEncode(JSON.stringify(header));
 
     const signingContent = `${encodedHeader}.${encodedPayload}`;
-
-    // the file is one directory up
-    const key = await keyService.getCurrentKey();
 
     const signature = crypto
         .createSign('RSA-SHA256')

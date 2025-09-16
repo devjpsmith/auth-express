@@ -13,8 +13,6 @@ export default class KeyRepository extends RepositoryBase<Key> {
         const list = await this.getAll();
         if (list.length === 0) key.id = 1;
         else key.id = list[list.length - 1].id + 1;
-        console.log(JSON.stringify(list, null, 2));
-        console.log(`Creating key with id ${key.id}`);
         return super.save(key);
     }
 

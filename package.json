@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "generate-keys": "node generate-keys.js",
-    "dev-start": "nodemon server.ts",
+    "dev-start": "nodemon --ignore test-db.json server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '**/*.{js,ts}'"
   },

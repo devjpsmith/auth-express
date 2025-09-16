@@ -1,23 +1,3 @@
-import path from 'node:path';
-
-function getPathToParentDirectory(dir: string): string {
-    const pathParts = dir.split(path.sep);
-    // return pathToParent
-    if (pathParts.length > 1) {
-        pathParts.pop();
-        return pathParts.join(path.sep);
-    }
-    // return root
-    if (pathParts.length === 1) return path.sep;
-    // at root, return root
-    return dir;
-}
-
-function getFileInParentDirectory(dir: string, filename: string): string {
-    const dirName = getPathToParentDirectory(dir);
-    return path.join(dirName, filename);
-}
-
 function urlEncode(str: string): string {
     return str.replace(/\+/g, '-')
         .replace(/\//g, '_')
@@ -30,9 +10,17 @@ function base64UrlEncode(str: string): string {
     return urlEncode(base64);
 }
 
+/*
+* Reverses urlEncoding. Assumes the encoded string is base64
+* */
+function urlDecodeToBase64(str: string): string {
+    return str.replace(/_/g, '/')
+        .replace(/-/g, '+')
+        .concat('=='.slice(0, (4 - (str.length % 4)) % 4));
+}
+
 export {
     base64UrlEncode,
-    getFileInParentDirectory,
-    getPathToParentDirectory,
     urlEncode,
+    urlDecodeToBase64
 }
