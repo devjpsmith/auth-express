@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import buildAppService from '../factories/app-service';
-import { NewAppParameters } from '../types/new-app-parameters';
+import { NewAppParameters } from '../../types/new-app-parameters';
 
 const router = Router();
 const authService = buildAppService();

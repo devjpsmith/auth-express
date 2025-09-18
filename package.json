@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate-keys": "node generate-keys.js",
-    "dev-start": "nodemon --ignore test-db.json server.ts",
+    "generate-keys": "ts-node generate-keys.ts",
+    "dev-start": "nodemon --ignore test-db.json src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '**/*.{js,ts}'"
   },
@@ -34,6 +34,7 @@
     "node-json-db": "^2.3.1",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2"
   }
 }

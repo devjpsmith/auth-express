@@ -5,7 +5,7 @@ import buildKeyService from '../factories/key-service';
 
 const keyService = buildKeyService();
 
-export default async function (data: object, exp): Promise<string> {
+export default async function (data: object, exp: number): Promise<string> {
     // the file is one directory up
     const key = await keyService.getCurrentKey();
 

@@ -1,5 +1,5 @@
 import RepositoryBase from './repository-base';
-import { Key } from '../types/key';
+import { Key } from '../../types/key';
 
 export default class KeyRepository extends RepositoryBase<Key> {
     protected readonly _path: string = '/keys';

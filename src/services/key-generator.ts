@@ -1,5 +1,5 @@
 import { generateKeyPairSync, createPublicKey, getRandomValues } from 'crypto';
-import { Key as tKey } from '../types/key';
+import { Key as tKey } from '../../types/key';
 import { base32crockford} from '@scure/base/index';
 
 type Key = Omit<tKey, 'id'>;

@@ -1,6 +1,6 @@
 import KeyRepository from '../repositories/key-repository';
 import keyGenerator from './key-generator';
-import { Key } from '../types/key';
+import { Key } from '../../types/key';
 
 export default class KeyService {
     constructor(private readonly _repository: KeyRepository) { }

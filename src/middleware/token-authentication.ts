@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { createVerify } from 'crypto';
 import { urlDecodeToBase64 } from '../lib/utils';
 import keyServiceBuilder from '../factories/key-service';
-import { Header, Payload } from '../types/jwt';
+import { Header, Payload } from '../../types/jwt';
+import logger from 'lib/logger';
 
 const keyService = keyServiceBuilder();
 
@@ -26,7 +27,7 @@ async function isValidAccessToken(access_token: string) {
 }
 
 function isValidPayload(access_token: string) {
-    const [ _, urlEncodedPayload ] = access_token.split('.');
+    const urlEncodedPayload = access_token.split('.')[1];
     const encodedPayload = urlDecodeToBase64(urlEncodedPayload);
     const payloadJson = Buffer.from(encodedPayload, 'base64').toString('utf8');
     const payload = JSON.parse(payloadJson) as Payload;
@@ -43,17 +44,16 @@ function getAccessToken(access_token: string) {
 }
 
 export default async function (req: Request, res: Response, next: NextFunction) {
+    logger.debug('Validating token authentication');
     // get token from header
     const header = req.headers.authorization;
     if (header){
         const access_token = getAccessToken(header);
         if (access_token && await isValidAccessToken(access_token) && isValidPayload(access_token)) {
-            console.log('Access token is valid');
-            next();
-            return;
+            logger.debug('Access token is valid');
+            return next();
         }
     }
-
+    logger.warn('Invalid access token');
     res.status(401).send();
-    next('Invalid access token');
 }

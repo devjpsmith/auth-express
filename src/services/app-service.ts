@@ -1,7 +1,7 @@
 import AppRepository from '../repositories/app-repository';
-import { App } from '../types/app';
+import { App } from '../../types/app';
 import ClientGenerator from './client-generator';
-import { NewAppParameters } from '../types/new-app-parameters';
+import { NewAppParameters } from '../../types/new-app-parameters';
 
 export default class AppService {
     constructor(

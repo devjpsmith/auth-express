@@ -1,4 +1,4 @@
-import { App } from '../types/app';
+import { App } from '../../types/app';
 import RepositoryBase from './repository-base';
 
 export default class AppRepository extends RepositoryBase<App> {

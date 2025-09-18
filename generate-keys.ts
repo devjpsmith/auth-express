@@ -1,5 +1,5 @@
-import buildKeyService from './factories/key-service';
-import buildAppService from './factories/app-service';
+import buildKeyService from './src/factories/key-service';
+import buildAppService from './src/factories/app-service';
 
 const keyService = buildKeyService();
 const appService = buildAppService();

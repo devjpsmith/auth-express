@@ -1,4 +1,4 @@
-import { Algorithm } from '../types/jwt';
+import { Algorithm } from '../../types/jwt';
 
 export default {
     algorithm: 'RS256' as Algorithm,
