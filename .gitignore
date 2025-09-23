@@ -142,6 +142,7 @@ vite.config.ts.timestamp-*
 
 # WebStorm
 .idea/
+**/http-client.private.env.json
 
 # Specific files
 private.key

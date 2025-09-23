@@ -35,4 +35,15 @@ I've made a couple test files for making requests. The `WebStorm.tests.http` fil
         /test.http
         /Auth Express.postman_collection.json
 ```
+To use the WebStorm http-client, you'll need to create a `http-client.private.env.json` file and set the two secret variables using the values returned from the `generate-keys` script under the development environment. In WebStorm, with the tests http file open, select the `development` environment before making requests.
+Example file:
+```json
+{
+  "development": {
+    "admin_client_secret": "[your client_id]",
+    "admin_client_secret": "[your client_secret]"
+  }
+}
+```
+
 Using the test file, you can first register an app at the `/register` endpoint. The `client_id` and `client_secret` are saved to variables which can be used in the next request to `/oauth/token`. The `access_token` returned can be put into the `jwt.io` and as long as the server is running and the `/.well-known` endpoints can be reached, the web page should be able to validate the token.
