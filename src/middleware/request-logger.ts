@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import logger from 'lib/logger';
+import { randomUUID } from 'crypto';
+import Logger from 'lib/logger';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
+    req.requestId = randomUUID();
+    req.logger = new Logger(req);
     const now = new Date();
-    logger.info(`New request logged at ${req.url}`);
+    req.logger?.info(`New request logged at ${req.url}`);
 
     res.on('finish', () => {
-        logger.info(`Request completed in ${new Date().getTime() - now.getTime()}ms`);
+        req.logger?.info(`Request completed in ${new Date().getTime() - now.getTime()}ms`);
     })
     next();
 }

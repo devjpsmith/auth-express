@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { urlDecodeToBase64 } from '../lib/utils';
 import { Payload } from '../../types/jwt';
-import logger from 'lib/logger';
 
 export default function (req: Request, res: Response, next: NextFunction) {
-    logger.debug('Running permissions middleware')
+    req.logger?.debug('Running permissions middleware')
     const header = req.headers.authorization;
     if (!header) {
-        logger.warn('No authorization header');
+        req.logger?.warn('No authorization header');
         next();
         return;
     }
@@ -19,11 +18,11 @@ export default function (req: Request, res: Response, next: NextFunction) {
     const payload = JSON.parse(payloadJson) as Payload;
 
     if (!payload.permissions) {
-        logger.debug('No permissions in access token');
+        req.logger?.debug('No permissions in access token');
         next();
         return;
     }
-    logger.info(`User permissions: ${payload.permissions}`);
+    req.logger?.info(`User permissions: ${payload.permissions}`);
     req.user = {
         permissions: payload.permissions,
     };

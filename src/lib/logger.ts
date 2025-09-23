@@ -1,34 +1,5 @@
+import { Request } from 'express';
 import { LogLevel } from '../../types/core/log-level';
-
-class Logger {
-    constructor(private readonly level: LogLevel = LogLevel.debug) {
-
-    }
-
-    debug(message: string) {
-        if (this.level <= LogLevel.debug) {
-            console.log(`[DEBUG] ${message}`);
-        }
-    }
-
-    info(message: string) {
-        if (this.level <= LogLevel.info) {
-            console.log(`[INFO]  ${message}`);
-        }
-    }
-
-    warn(message: string) {
-        if (this.level <= LogLevel.warn) {
-            console.log(`[WARN]  ${message}`);
-        }
-    }
-
-    error(message: string) {
-        if (this.level <= LogLevel.error) {
-            console.log(`[ERROR] ${message}`);
-        }
-    }
-}
 
 function getLogLevelFromString(str: string | undefined): LogLevel {
     if (!str)
@@ -41,6 +12,34 @@ function getLogLevelFromString(str: string | undefined): LogLevel {
     }
 }
 
-const logger = new Logger(getLogLevelFromString(process.env.LOG_LEVEL));
+export default class Logger {
+    constructor(private readonly request: Request, private readonly level: LogLevel = LogLevel.debug) {
+        if (!level) {
+            this.level = getLogLevelFromString(process.env.LOG_LEVEL);
+        }
+    }
 
-export default logger;
+    debug(message: string) {
+        if (this.level <= LogLevel.debug) {
+            console.log(`[DEBUG] ${this.request.requestId} ${message}`);
+        }
+    }
+
+    info(message: string) {
+        if (this.level <= LogLevel.info) {
+            console.log(`[INFO]  ${this.request.requestId} ${message}`);
+        }
+    }
+
+    warn(message: string) {
+        if (this.level <= LogLevel.warn) {
+            console.log(`[WARN]  ${this.request.requestId} ${message}`);
+        }
+    }
+
+    error(message: string) {
+        if (this.level <= LogLevel.error) {
+            console.log(`[ERROR] ${this.request.requestId} ${message}`);
+        }
+    }
+}

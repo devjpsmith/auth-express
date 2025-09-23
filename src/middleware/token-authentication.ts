@@ -44,16 +44,16 @@ function getAccessToken(access_token: string) {
 }
 
 export default async function (req: Request, res: Response, next: NextFunction) {
-    logger.debug('Validating token authentication');
+    req.logger?.debug('Validating token authentication');
     // get token from header
     const header = req.headers.authorization;
     if (header){
         const access_token = getAccessToken(header);
         if (access_token && await isValidAccessToken(access_token) && isValidPayload(access_token)) {
-            logger.debug('Access token is valid');
+            req.logger?.debug('Access token is valid');
             return next();
         }
     }
-    logger.warn('Invalid access token');
+    req.logger?.warn('Invalid access token');
     res.status(401).send();
 }
