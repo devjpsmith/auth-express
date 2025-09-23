@@ -3,7 +3,6 @@ import { createVerify } from 'crypto';
 import { urlDecodeToBase64 } from '../lib/utils';
 import keyServiceBuilder from '../factories/key-service';
 import { Header, Payload } from '../../types/jwt';
-import logger from 'lib/logger';
 
 const keyService = keyServiceBuilder();
 
